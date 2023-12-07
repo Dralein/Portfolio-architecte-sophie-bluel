@@ -1,7 +1,17 @@
-async function displayWorks() {
+/* Affichage de la gallery en JS */
+async function getWorks() {
   try {
     const response = await fetch('http://localhost:5678/api/works');
-    const works = await response.json();
+    return await response.json();
+  } catch (error) {
+    console.error('Erreur lors de la récupération des travaux :', error);
+    return [];
+  }
+}
+
+async function displayWorks() {
+  try {
+    const works = await getWorks();
 
     const gallery = document.querySelector("#js-gallery");
     works.forEach((work) => {
@@ -18,8 +28,54 @@ async function displayWorks() {
       gallery.appendChild(figure);
     });
   } catch (error) {
-    console.error('Erreur :', error);
+    console.error('Erreur lors de l\'affichage des travaux :', error);
   }
 }
 
 displayWorks();
+
+/* Filtre */
+
+async function displayCategorysButtons() {
+  try {
+    const response = await fetch('http://localhost:5678/api/categories');
+    const categorys = await response.json();
+
+    const filters = document.querySelector(".filters");
+    categorys.forEach(({ id, name }) => {
+      const btn = document.createElement("button");
+      btn.textContent = name;
+      btn.id = id;
+      filters.appendChild(btn);
+    });
+  } catch (error) {
+    console.error('Erreur :', error);
+  }
+}
+
+displayCategorysButtons();
+
+
+async function filterCategory() {
+  const garage = await getWorks();
+  const buttons = document.querySelectorAll(".filters button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      btnId = e.target.id;
+      gallery.innerHTML = "";
+      if (btnId !== "0") {
+        const projectTriCategory = project.filter((object) => {
+          return object.categoryId == btnId;
+        });
+        projectTriCategory.forEach((object) => {
+          createObject(object);
+        });
+      } else {
+        displayWorks();
+      }
+      console.log(btnId);
+    });
+  });
+}
+filterCategory();
+
