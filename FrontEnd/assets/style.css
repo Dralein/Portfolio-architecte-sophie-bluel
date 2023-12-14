@@ -219,3 +219,19 @@ button:hover {
 	color: white;
 	cursor: pointer;
 }
+
+.centerlog {
+	display: flex;
+	justify-content: center;
+	gap: 60px;
+}
+
+.forgot {
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-decoration-line: underline; 
+}
