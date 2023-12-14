@@ -195,6 +195,7 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
   margin-bottom: 40px;
+	gap: 10px;
 
 }
 
@@ -208,8 +209,8 @@ button {
 	font-style: normal;
 	font-weight: 700;
 	line-height: normal; 
-	width: 100px;
   height: 37px;
+	padding: 0px 20px;
 	background-color: transparent;   
 }
 

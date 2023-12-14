@@ -57,25 +57,42 @@ displayCategorysButtons();
 
 
 async function filterCategory() {
-  const garage = await getWorks();
+  const works = await getWorks();
   const buttons = document.querySelectorAll(".filters button");
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      btnId = e.target.id;
+      const btnId = e.target.id;
+      const gallery = document.querySelector("#js-gallery");
       gallery.innerHTML = "";
+
       if (btnId !== "0") {
-        const projectTriCategory = project.filter((object) => {
-          return object.categoryId == btnId;
+        const projectsFiltered = works.filter((work) => {
+          return work.categoryId == btnId;
         });
-        projectTriCategory.forEach((object) => {
-          createObject(object);
-        });
+        displayFilteredProjects(projectsFiltered);
       } else {
         displayWorks();
       }
-      console.log(btnId);
     });
   });
 }
+
+function displayFilteredProjects(filteredWorks) {
+  const gallery = document.querySelector("#js-gallery");
+  filteredWorks.forEach((work) => {
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    const figcaption = document.createElement('figcaption');
+
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    figcaption.textContent = work.title;
+
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    gallery.appendChild(figure);
+  });
+}
+
 filterCategory();
 
