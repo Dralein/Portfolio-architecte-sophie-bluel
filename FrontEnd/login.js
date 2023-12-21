@@ -25,8 +25,8 @@ async function login() {
       if (response.ok) {
         const user = await response.json();
 
-        if (user && user.admin === true) {
-          window.sessionStorage.loged = true;
+        if (user.userId && user.token) {
+          window.sessionStorage.logged = true;
           window.location.href = "index.html";
         } else {
           email.classList.add("inputErrorLogin");

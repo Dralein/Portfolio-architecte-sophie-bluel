@@ -93,6 +93,38 @@ function displayFilteredProjects(filteredWorks) {
     gallery.appendChild(figure);
   });
 }
-
 filterCategory();
 
+document.addEventListener("DOMContentLoaded", () => {
+  const logged = window.sessionStorage.logged;
+  const admin = document.querySelector("header nav .admin");
+  const logout = document.querySelector("header nav .logout");
+  const modalContent = document.querySelector(".modal");
+  const xmark = document.querySelector(".modal .fa-xmark");
+
+  if (logged == "true") {
+    admin.textContent = "admin";
+    logout.textContent = "logout";
+    logout.addEventListener("click", () => {
+      window.sessionStorage.logged = false;
+    });
+  }
+
+  admin.addEventListener("click", () => {
+    modalContent.style.display = "flex";
+  });
+
+  xmark.addEventListener("click", () => {
+    modalContent.style.display = "none";
+  });
+  modalContent.addEventListener("click", (e) => {
+    console.log(e.target.className);
+    if (e.target.className == "modal") {
+      modalContent.style.display = "none";
+    }
+  });
+});
+
+async function displayGalleryModal () {
+  
+}
