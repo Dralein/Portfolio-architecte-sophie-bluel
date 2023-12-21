@@ -100,9 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const admin = document.querySelector("header nav .admin");
   const logout = document.querySelector("header nav .logout");
   const modalContent = document.querySelector(".modal");
+  const galleryModal = document.querySelector(".modal2");
   const xmark = document.querySelector(".modal .fa-xmark");
 
-  if (logged == "true") {
+  if (logged === "true") {
     admin.textContent = "admin";
     logout.textContent = "logout";
     logout.addEventListener("click", () => {
@@ -117,14 +118,54 @@ document.addEventListener("DOMContentLoaded", () => {
   xmark.addEventListener("click", () => {
     modalContent.style.display = "none";
   });
+
   modalContent.addEventListener("click", (e) => {
-    console.log(e.target.className);
-    if (e.target.className == "modal") {
+    if (e.target === modalContent) {
       modalContent.style.display = "none";
     }
   });
-});
 
-async function displayGalleryModal () {
-  
-}
+  async function displayGalleryModal() {
+    galleryModal.innerHTML = "";
+    const gallery = await getWorks();
+    gallery.forEach((galleryItem) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      const span = document.createElement("span");
+      const trash = document.createElement("i");
+      trash.classList.add("fa-solid", "fa-trash-can");
+      trash.id = galleryItem.id;
+      img.src = galleryItem.imageUrl;
+      span.appendChild(trash);
+      figure.appendChild(span);
+      figure.appendChild(img);
+      galleryModal.appendChild(figure);
+    });
+
+    function deleteGallery() {
+      const deleteTrash = document.querySelectorAll(".fa-trash-can");
+      deleteTrash.forEach((trash) => {
+        trash.addEventListener("click", (e) => {
+          const id = trash.id;
+          const init = {
+            method: "DELETE",
+            headers: { "content-Type": "application/json" },
+          };
+          fetch('http://localhost:5678/api/works/${id}', init)
+            .then((response) => {
+              if (!response.ok) {
+                console.log("Le delete n'a pas marché !");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Le delete a réussi voici la data :", data);
+            });
+        });
+      });
+    }
+    deleteGallery();
+  }
+
+  displayGalleryModal();
+});

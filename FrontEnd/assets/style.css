@@ -261,9 +261,9 @@ button:hover {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
-	width: 363px;
-	height: 50%;
 	background-color: #fefefe;
+	width: 630px;
+	height: 636px;
 	border-radius: 10px;
 	position: absolute;
 }
@@ -273,4 +273,23 @@ button:hover {
   top: 20px;
 	right: 20px;
 	cursor: pointer;
+}
+
+.modal2 {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	flex: 1;
+	object-fit: cover;
+
+	figure {
+	}
+	
+	img {
+		width: 100px;
+		height: 104.08px;
+		flex-shrink: 0; 
+	}
 }
