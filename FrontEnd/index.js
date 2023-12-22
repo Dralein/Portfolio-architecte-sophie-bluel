@@ -100,8 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const admin = document.querySelector("header nav .admin");
   const logout = document.querySelector("header nav .logout");
   const modalContent = document.querySelector(".modal");
-  const galleryModal = document.querySelector(".modal2");
+  const galleryModal = document.querySelector(".modalinterior");
   const xmark = document.querySelector(".modal .fa-xmark");
+  const addImg = document.getElementById("addimg")
+  const leftmark = document.getElementById('leftarrow')
+  const modality2 = document.querySelector(".modal2")
+  const iconmark2 = document.getElementById("iconmark2")
 
   if (logged === "true") {
     admin.textContent = "admin";
@@ -115,6 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
     modalContent.style.display = "flex";
   });
 
+  iconmark2.addEventListener("click", () => {
+    modality2.style.display = "none";
+    modalContent.style.display = "none"; 
+  });
+
   xmark.addEventListener("click", () => {
     modalContent.style.display = "none";
   });
@@ -123,6 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === modalContent) {
       modalContent.style.display = "none";
     }
+  });
+
+  xmark.addEventListener("click", () => {
+    modality2.style.display = "none";
   });
 
   async function displayGalleryModal() {
@@ -140,32 +153,43 @@ document.addEventListener("DOMContentLoaded", () => {
       figure.appendChild(span);
       figure.appendChild(img);
       galleryModal.appendChild(figure);
-    });
 
-    function deleteGallery() {
-      const deleteTrash = document.querySelectorAll(".fa-trash-can");
-      deleteTrash.forEach((trash) => {
-        trash.addEventListener("click", (e) => {
+      trash.addEventListener("click", async () => {
+        try {
           const id = trash.id;
           const init = {
             method: "DELETE",
-            headers: { "content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
           };
-          fetch('http://localhost:5678/api/works/${id}', init)
-            .then((response) => {
-              if (!response.ok) {
-                console.log("Le delete n'a pas marché !");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Le delete a réussi voici la data :", data);
-            });
-        });
+          const response = await fetch(`http://localhost:5678/api/works/${id}`, init);
+          if (response.ok) {
+            trash.parentElement.parentElement.remove();
+            console.log("Élément supprimé avec succès !");
+          } else {
+            console.log("Le delete n'a pas marché !");
+          }
+        } catch (error) {
+          console.error("Erreur lors de la suppression :", error);
+        }
       });
-    }
-    deleteGallery();
+    });
   }
 
+  addImg.addEventListener("click", () => {
+    modality2.style.display = "flex";
+    modalContent.style.display = "flex";
+  });
+
+  leftmark.addEventListener("click", () => {
+    modalContent.style.display = "flex";
+    modality2.style.display = "none";
+    
+  });
+  
+  displayAddGalleryModal();
+  
+
   displayGalleryModal();
+
 });
+
