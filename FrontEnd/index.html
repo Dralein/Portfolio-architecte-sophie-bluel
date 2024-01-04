@@ -78,8 +78,13 @@
 		 <i id="leftarrow" class="fa-solid fa-arrow-left fa-2xl"></i>
 		 <i id="iconmark2" class="fa-solid fa-xmark fa-2xl"></i>
 		 <h3>Ajout photo</h3>
+		 <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
+			<input type="file" id="imageUploadInput" name="image" accept="image/*">
+			<input type="text" id="titleInput" name="title" placeholder="Titre de l'image">
+			<input type="text" id="categoryIdInput" name="category" placeholder="ID de la catégorie">
+      <button type="submit" id="addimg">Valider</button>
+     </form>
 		 <div class="modalinterior"></div>
-		 <button id="addimg">Valider</button>
 		</div>
 	 </div>
 </body>

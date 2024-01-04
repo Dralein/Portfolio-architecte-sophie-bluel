@@ -25,7 +25,8 @@ async function login() {
       if (response.ok) {
         const user = await response.json();
 
-        if (user.userId && user.token) {
+        if (user.token) {
+          window.sessionStorage.setItem('token', user.token);
           window.sessionStorage.logged = true;
           window.location.href = "index.html";
         } else {
@@ -45,4 +46,4 @@ async function login() {
   });
 }
 
-login();  
+login();

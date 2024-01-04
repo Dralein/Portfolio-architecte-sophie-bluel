@@ -153,27 +153,42 @@ document.addEventListener("DOMContentLoaded", () => {
       figure.appendChild(span);
       figure.appendChild(img);
       galleryModal.appendChild(figure);
-
-      trash.addEventListener("click", async () => {
-        try {
+    });
+  
+    function deleteGallery() {
+      const deleteTrash = document.querySelectorAll(".fa-trash-can");
+      deleteTrash.forEach((trash) => {
+        trash.addEventListener("click", (e) => {
           const id = trash.id;
+          const token = sessionStorage.getItem('token');
+    
           const init = {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
           };
-          const response = await fetch(`http://localhost:5678/api/works/${id}`, init);
-          if (response.ok) {
-            trash.parentElement.parentElement.remove();
-            console.log("Élément supprimé avec succès !");
-          } else {
-            console.log("Le delete n'a pas marché !");
-          }
-        } catch (error) {
-          console.error("Erreur lors de la suppression :", error);
-        }
+          fetch(`http://localhost:5678/api/works/${id}`, init)
+            .then((response) => {
+              if (!response.ok) {
+                console.log("Le delete n'a pas marché !");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Le delete a réussi voici la data :", data);
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la suppression :", error);
+            });
+        });
       });
-    });
+    }
+    deleteGallery();
   }
+
+  displayGalleryModal();
 
   addImg.addEventListener("click", () => {
     modality2.style.display = "flex";
@@ -185,11 +200,44 @@ document.addEventListener("DOMContentLoaded", () => {
     modality2.style.display = "none";
     
   });
-  
-  displayAddGalleryModal();
-  
 
-  displayGalleryModal();
+  function addGallery() {
+    const imageUploadForm = document.getElementById("imageUploadForm");
+
+    imageUploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+    
+      const formData = new FormData(imageUploadForm);
+      formData.append('title', document.getElementById("titleInput").value);
+      formData.append('categoryId', document.getElementById("categoryIdInput").value);
+    
+      const token = window.sessionStorage.getItem("token");
+    
+      const options = {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          "Authorization": `Bearer ${token}`
+        },
+        body: formData,
+      };
+    
+      try {
+        const response = await fetch("http://localhost:5678/api/works", options);
+    
+        if (response.ok) {
+          console.log("Image envoyée avec succès !");
+        } else {
+          console.error("Erreur lors de l'envoi de l'image.");
+        }
+      } catch (error) {
+        console.error("Erreur :", error);
+      }
+    });
+  }
+  
+  addGallery();
 
 });
 
