@@ -81,8 +81,10 @@
 		 <h3 class="modal2title">Ajout photo</h3>
 		 <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
 			<input type="file" id="imageUploadInput" name="image" accept="image/*">
-			<input type="text" id="titleInput" name="title" placeholder="Titre de l'image">
-			<input type="text" id="categoryIdInput" name="category" placeholder="ID de la catégorie">
+			<span class="modalpolicy">Titre</span>
+			<input type="text" id="titleInput" name="title">
+			<span class="modalpolicy">Catégorie</span>
+			<input type="text" id="categoryIdInput" name="category">
 			<div class="line1"></div>
       <button type="submit" id="addimg">Valider</button>
      </form>

@@ -323,8 +323,8 @@ button:hover {
 }
 
 .modal2title {
-	margin-top: 60px;
-	margin-bottom: 36px;
+	margin-top: 50px;
+	margin-bottom: 33px;
 }
 
 #imageUploadForm {
@@ -333,12 +333,12 @@ button:hover {
 }
 
 #imageUploadInput {
-	margin-bottom: 56px;
-	opacity: 0;
+	margin-bottom: 25px;
+	vertical-align: middle;
 	text-align: center;
 	background-color: #E8F1F6;
 	width: 420px;
-	height: 169px;
+	height: 129px;
 }
 
 .imageUpload {
@@ -346,7 +346,11 @@ button:hover {
 }
 
 #categoryIdInput {
-	margin-bottom: 47px;
+	margin-bottom: 35px;
+	height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
 .line1 {
@@ -363,7 +367,11 @@ button:hover {
 }
 
 #titleInput {
-	margin-bottom: 47px;
+	margin-bottom: 35px;
+	height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
 .modal1title {
@@ -373,4 +381,14 @@ button:hover {
 
 .addpicture {
 	margin-bottom: 45px;
+}
+
+.modalpolicy {
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal; 
+	margin-bottom: 10px;
 }
