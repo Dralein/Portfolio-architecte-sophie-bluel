@@ -207,9 +207,10 @@ document.addEventListener("DOMContentLoaded", () => {
     imageUploadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
     
-      const formData = new FormData(imageUploadForm);
+      const formData = new FormData();
+      formData.append('image', document.getElementById("imageUploadInput").files[0]);
       formData.append('title', document.getElementById("titleInput").value);
-      formData.append('categoryId', document.getElementById("categoryIdInput").value);
+      formData.append('category', document.getElementById("categoryIdInput").value);
     
       const token = window.sessionStorage.getItem("token");
     
@@ -217,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
           "Authorization": `Bearer ${token}`
         },
         body: formData,

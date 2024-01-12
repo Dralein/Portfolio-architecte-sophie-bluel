@@ -148,6 +148,7 @@ li:hover, a:hover {
 
 .gallery img {
 	width: 100%;
+	height: 100%;
 
 }
 #contact {
@@ -278,16 +279,15 @@ button:hover {
 .modalinterior {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	align-content: flex-start;
 	flex-wrap: wrap;
 	flex: 1;
-	object-fit: cover;
 
 	img {
 		width: 100px;
 		height: 104.08px;
 		flex-shrink: 0; 
+		object-fit: cover;
 	}
 }
 
@@ -312,4 +312,65 @@ button:hover {
 	height: 636px;
 	border-radius: 10px;
 	position: absolute;
+}
+
+.logout:hover {
+	cursor: pointer;
+}
+
+.admin {
+	cursor: pointer;
+}
+
+.modal2title {
+	margin-top: 60px;
+	margin-bottom: 36px;
+}
+
+#imageUploadForm {
+	display: flex;
+	flex-direction: column;
+}
+
+#imageUploadInput {
+	margin-bottom: 56px;
+	opacity: 0;
+	text-align: center;
+	background-color: #E8F1F6;
+	width: 420px;
+	height: 169px;
+}
+
+.imageUpload {
+	background-color: #E8F1F6;
+}
+
+#categoryIdInput {
+	margin-bottom: 47px;
+}
+
+.line1 {
+	width: 420px;
+	height: 1px; 
+	background: #B3B3B3; 
+	margin-bottom: 32px;
+}
+
+#leftarrow {
+	position: relative;
+	right: 274px;
+	top: 26px;
+}
+
+#titleInput {
+	margin-bottom: 47px;
+}
+
+.modal1title {
+	margin-top: 60px;
+	margin-bottom: 46px;
+}
+
+.addpicture {
+	margin-bottom: 45px;
 }

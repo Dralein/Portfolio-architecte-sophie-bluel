@@ -68,20 +68,22 @@
   <div class="modal">
 	 <div class="modal-content">
 		<i id="iconmark" class="fa-solid fa-xmark fa-2xl"></i>
-		<h3>Galerie photo</h3>
+		<h3 class="modal1title">Galerie photo</h3>
 		<div class="modalinterior"></div>
-		<button id="addimg">Ajouter une photo</button>
+		<div class="line1"></div>
+		<button id="addimg" class="addpicture">Ajouter une photo</button>
 	 </div>
   </div>
 	<div class="modal2">
 		<div class="modal-content2">
 		 <i id="leftarrow" class="fa-solid fa-arrow-left fa-2xl"></i>
 		 <i id="iconmark2" class="fa-solid fa-xmark fa-2xl"></i>
-		 <h3>Ajout photo</h3>
+		 <h3 class="modal2title">Ajout photo</h3>
 		 <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
 			<input type="file" id="imageUploadInput" name="image" accept="image/*">
 			<input type="text" id="titleInput" name="title" placeholder="Titre de l'image">
 			<input type="text" id="categoryIdInput" name="category" placeholder="ID de la catégorie">
+			<div class="line1"></div>
       <button type="submit" id="addimg">Valider</button>
      </form>
 		 <div class="modalinterior"></div>
