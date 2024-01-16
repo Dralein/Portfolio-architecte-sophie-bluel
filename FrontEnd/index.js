@@ -97,7 +97,8 @@ filterCategory();
 
 document.addEventListener("DOMContentLoaded", () => {
   const logged = window.sessionStorage.logged;
-  const admin = document.querySelector("header nav .admin");
+  const admin = document.querySelector(".admin");
+  const edit = document.getElementById('edit1');
   const logout = document.querySelector("header nav .logout");
   const modalContent = document.querySelector(".modal");
   const galleryModal = document.querySelector(".modalinterior");
@@ -108,10 +109,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const iconmark2 = document.getElementById("iconmark2")
 
   if (logged === "true") {
-    admin.textContent = "admin";
+    edit.style.opacity ='1'
+    admin.textContent = " modifier";
+    admin.classList.add("fa-solid","fa-pen-to-square")
     logout.textContent = "logout";
     logout.addEventListener("click", () => {
       window.sessionStorage.logged = false;
+      window.sessionStorage.token = false;
+      location.reload(true);
     });
   }
 
@@ -147,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const span = document.createElement("span");
       const trash = document.createElement("i");
       trash.classList.add("fa-solid", "fa-trash-can");
+      span.classList.add("trashicon")
       trash.id = galleryItem.id;
       img.src = galleryItem.imageUrl;
       span.appendChild(trash);
