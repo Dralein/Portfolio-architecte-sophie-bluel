@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 
+<script src="index.js"></script>
 <body>
 	<div id="edit1" class="edit"><i class="fa-solid fa-pen-to-square"></i>Mode édition</div>
 <header>
@@ -60,7 +61,6 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
-	<script src="index.js"></script>
 </main>
 
 <footer>
@@ -85,14 +85,18 @@
 		 <i id="iconmark2" class="fa-solid fa-xmark fa-2xl"></i>
 		 <h3 class="modal2title">Ajout photo</h3>
 		 <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
-			<input type="file" id="imageUploadInput" name="image" accept="image/*">
+			<input type="file" id="imageUploadInput" name="image" accept="image/*" onchange="previewImage()">
 			<span class="modalpolicy">Titre</span>
 			<input type="text" id="titleInput" name="title">
 			<span class="modalpolicy">Catégorie</span>
-			<input type="text" id="categoryIdInput" name="category">
+			<select id="categoryIdInput" name="category">
+				<option value="1">Objets</option>
+        <option value="2">Appartements</option>
+        <option value="3">Hôtels & restaurants</option>
+      </select>
 			<div class="line1"></div>
-      <button type="submit" id="addimg">Valider</button>
-     </form>
+			<button type="submit" id="addimg1">Valider</button>
+	   </form>
 		 <div class="modalinterior"></div>
 		</div>
 	 </div>

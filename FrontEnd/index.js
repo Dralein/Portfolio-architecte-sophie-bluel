@@ -107,6 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const leftmark = document.getElementById('leftarrow')
   const modality2 = document.querySelector(".modal2")
   const iconmark2 = document.getElementById("iconmark2")
+  const imageUploadInput = document.getElementById("imageUploadInput");
+  const titleInput = document.getElementById("titleInput");
+  const categoryIdInput = document.getElementById("categoryIdInput");
+  const addImgButton = document.getElementById("addimg1");
 
   if (logged === "true") {
     edit.style.opacity ='1'
@@ -207,6 +211,57 @@ document.addEventListener("DOMContentLoaded", () => {
     
   });
 
+  function previewImage() {
+    const input = document.getElementById('imageUploadInput');
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            // Mise à jour du style directement sur l'input
+            input.style.backgroundImage = `url(${e.target.result})`;
+            input.style.backgroundSize = 'cover';
+            input.style.backgroundPosition = 'center';
+            input.style.backgroundRepeat = 'no-repeat';
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        // Si aucun fichier n'est sélectionné, réinitialiser le style
+        input.style.backgroundImage = 'none';
+    }
+  } 
+
+  previewImage();
+
+
+  function isFormValid() {
+    const imageInput = document.getElementById("imageUploadInput");
+    const titleInput = document.getElementById("titleInput");
+    const categoryInput = document.getElementById("categoryIdInput");
+  
+    
+    const isFilled = imageInput.files.length > 0 && titleInput.value.trim() !== '' && categoryInput.value.trim() !== '';
+  
+    return isFilled;
+  }
+  
+  function updateButtonState() {
+    const isFormReady = isFormValid();
+  
+    
+    addImgButton.style.backgroundColor = isFormReady ? "#FFFFFF" : "#A7A7A7";
+    addImgButton.style.borderColor = isFormReady ? "#1D6154" : "#A7A7A7";
+    addImgButton.style.color = isFormReady ? "#1D6154" : "#FFFFFF";
+    addImgButton.disabled = !isFormReady; 
+  }
+  
+ 
+  document.getElementById("imageUploadInput").addEventListener("change", updateButtonState);
+  document.getElementById("titleInput").addEventListener("input", updateButtonState);
+  document.getElementById("categoryIdInput").addEventListener("input", updateButtonState);
+
   function addGallery() {
     const imageUploadForm = document.getElementById("imageUploadForm");
 
@@ -228,6 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: formData,
       };
+
+      console.log(formData);
     
       try {
         const response = await fetch("http://localhost:5678/api/works", options);

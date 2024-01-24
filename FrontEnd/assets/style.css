@@ -425,3 +425,37 @@ button:hover {
 	align-items: center;
 	opacity: 0;
 }
+
+#email, #password {
+	margin-bottom: 35px;
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.centerform {
+	display: flex;
+	justify-content: center;
+}
+
+.formwidth {
+	width: 35%;
+}
+
+.buttonsize {
+	width: 50%;
+	margin-bottom: 28px;
+	margin-left: 100px;
+}
+
+.specialh2 {
+	margin-top: 150px;
+	margin-bottom: 40px;
+}
+
+#addimg:disabled {
+	background-color: #A7A7A7;;
+	border-color: #A7A7A7;
+	cursor: not-allowed;
+}
