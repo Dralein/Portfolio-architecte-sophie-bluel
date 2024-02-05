@@ -14,7 +14,7 @@
 
 <script src="index.js"></script>
 <body>
-	<div id="edit1" class="edit"><i class="fa-solid fa-pen-to-square"></i>Mode édition</div>
+	<div id="edit1" class="edit"> <i class="fa-solid fa-pen-to-square"></i>&nbsp;Mode édition</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -85,7 +85,9 @@
 		 <i id="iconmark2" class="fa-solid fa-xmark fa-2xl"></i>
 		 <h3 class="modal2title">Ajout photo</h3>
 		 <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
-			<input type="file" id="imageUploadInput" name="image" accept="image/*" onchange="previewImage()">
+     <input type="file" id="imageUploadInput" name="image" accept="image/jpeg,image/png" onchange="previewImage(this)">
+		 <button type="button" onclick="document.getElementById('imageUploadInput').click()">+ Ajouter une photo</button>
+		 <div class="preview-image" id="preview"></div> 
 			<span class="modalpolicy">Titre</span>
 			<input type="text" id="titleInput" name="title">
 			<span class="modalpolicy">Catégorie</span>

@@ -113,14 +113,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const addImgButton = document.getElementById("addimg1");
 
   if (logged === "true") {
-    edit.style.opacity ='1'
-    admin.textContent = " modifier";
-    admin.classList.add("fa-solid","fa-pen-to-square")
+    edit.style.opacity = '1';
+    const iconElement = document.createElement('i');
+    iconElement.classList.add("fa-solid", "fa-pen-to-square");
+    admin.appendChild(iconElement);
+    admin.appendChild(document.createTextNode(' '));
+    const textElement = document.createElement('span');
+    textElement.textContent = "modifier";
+    admin.appendChild(textElement);
     logout.textContent = "logout";
     logout.addEventListener("click", () => {
-      window.sessionStorage.logged = false;
-      window.sessionStorage.token = false;
-      location.reload(true);
+        window.sessionStorage.logged = false;
+        window.sessionStorage.token = false;
+        location.reload(true);
     });
   }
 
@@ -211,30 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
   });
 
-  function previewImage() {
-    const input = document.getElementById('imageUploadInput');
-    const file = input.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            // Mise à jour du style directement sur l'input
-            input.style.backgroundImage = `url(${e.target.result})`;
-            input.style.backgroundSize = 'cover';
-            input.style.backgroundPosition = 'center';
-            input.style.backgroundRepeat = 'no-repeat';
-        };
-
-        reader.readAsDataURL(file);
-    } else {
-        // Si aucun fichier n'est sélectionné, réinitialiser le style
-        input.style.backgroundImage = 'none';
-    }
-  } 
-
-  previewImage();
-
 
   function isFormValid() {
     const imageInput = document.getElementById("imageUploadInput");
@@ -302,5 +283,22 @@ document.addEventListener("DOMContentLoaded", () => {
   
   addGallery();
 
+  const editDiv = document.getElementById('edit1');
+  if (logged === "false") {
+    editDiv.parentNode.removeChild(editDiv);
+  }
+
+
+
 });
 
+function previewImage(input) {
+  if (input.files && input.files[0]) {
+     var reader = new FileReader();
+    reader.onload = function (e) {
+     document.getElementById('preview').innerHTML = '<img src="' + e.target.result + '">';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+
+}
