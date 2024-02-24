@@ -14,9 +14,9 @@
       src="https://kit.fontawesome.com/b216f7a880.js"
       crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/style.css" />
+    <script src="index.js" defer></script>
   </head>
 
-  <script src="index.js"></script>
   <body>
     <div id="edit1" class="edit">
       <i class="fa-solid fa-pen-to-square"></i>&nbsp;Mode édition
@@ -90,7 +90,7 @@
     </footer>
     <div class="modal">
       <div class="modal-content">
-        <i id="iconmark" class="fa-solid fa-xmark fa-2xl"></i>
+        <i id="iconmark" class="fa-solid fa-xmark fa-xl"></i>
         <h3 class="modal1title">Galerie photo</h3>
         <div class="modalinterior"></div>
         <div class="line1"></div>
@@ -99,11 +99,12 @@
     </div>
     <div class="modal2">
       <div class="modal-content2">
-        <i id="leftarrow" class="fa-solid fa-arrow-left fa-2xl"></i>
-        <i id="iconmark2" class="fa-solid fa-xmark fa-2xl"></i>
+        <i id="leftarrow" class="fa-solid fa-arrow-left fa-xl"></i>
+        <i id="iconmark2" class="fa-solid fa-xmark fa-xl"></i>
         <h3 class="modal2title">Ajout photo</h3>
         <form id="imageUploadForm" enctype="multipart/form-data" method="POST">
-          <input type="file" id="imageUploadInput" name="image" accept="image/jpeg,image/png" onchange="previewImage(this)" />
+          <label id="imageUploadInput" for="undisplayfile"></label>
+          <input type="file" id="undisplayfile" name="image" accept="image/jpeg,image/png" onchange="previewImage(this)" />
           <div id="modalPreview">
             <svg
               width="76"
@@ -128,16 +129,15 @@
             <span id="spanjpg">jpg, png : 4mo max</span>
           </div>
           <div class="preview-image" id="preview"></div>
-          <span class="modalpolicy">Titre</span>
+          <label for="titleInput" class="modalpolicy">Titre</label>
           <input type="text" id="titleInput" name="title" />
-          <span class="modalpolicy">Catégorie</span>
+          <label for="categoryIdInput" class="modalpolicy">Catégorie</label>
           <select id="categoryIdInput" name="category">
-            <option value="1">Objets</option>
-            <option value="2">Appartements</option>
-            <option value="3">Hôtels & restaurants</option>
           </select>
           <div class="line1"></div>
+          <div class="align-button">
           <button type="submit" id="addimg1">Valider</button>
+          </div>
         </form>
         <div class="modalinterior"></div>
       </div>

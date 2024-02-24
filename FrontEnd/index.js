@@ -14,6 +14,7 @@ async function displayWorks() {
     const works = await getWorks();
 
     const gallery = document.querySelector("#js-gallery");
+    gallery.innerHTML = "";
     works.forEach((work) => {
       const figure = document.createElement("figure");
       const img = document.createElement("img");
@@ -35,6 +36,11 @@ async function displayWorks() {
 displayWorks();
 
 /* Filtre */
+
+async function getCategorys() {
+  const response = await fetch("http://localhost:5678/api/categories");
+  return await response.json();
+}
 
 async function displayCategorysButtons() {
   try {
@@ -106,9 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const leftmark = document.getElementById("leftarrow");
   const modality2 = document.querySelector(".modal2");
   const iconmark2 = document.getElementById("iconmark2");
-  const imageUploadInput = document.getElementById("imageUploadInput");
-  const titleInput = document.getElementById("titleInput");
-  const categoryIdInput = document.getElementById("categoryIdInput");
   const addImgButton = document.getElementById("addimg1");
 
   if (logged === "true") {
@@ -138,11 +141,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   xmark.addEventListener("click", () => {
+    modality2.style.display = "none";
     modalContent.style.display = "none";
   });
 
   modalContent.addEventListener("click", (e) => {
     if (e.target === modalContent) {
+      modalContent.style.display = "none";
+    }
+  });
+
+  modality2.addEventListener("click", (e) => {
+    if (e.target === modality2) {
+      modality2.style.display = "none";
       modalContent.style.display = "none";
     }
   });
@@ -168,41 +179,48 @@ document.addEventListener("DOMContentLoaded", () => {
       figure.appendChild(img);
       galleryModal.appendChild(figure);
     });
-
-    function deleteGallery() {
-      const deleteTrash = document.querySelectorAll(".fa-trash-can");
-      deleteTrash.forEach((trash) => {
-        trash.addEventListener("click", (e) => {
-          const id = trash.id;
-          const token = sessionStorage.getItem("token");
-
-          const init = {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          };
-          fetch(`http://localhost:5678/api/works/${id}`, init)
-            .then((response) => {
-              if (!response.ok) {
-                console.log("Le delete n'a pas marché !");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Le delete a réussi voici la data :", data);
-            })
-            .catch((error) => {
-              console.error("Erreur lors de la suppression :", error);
-            });
-        });
-      });
-    }
     deleteGallery();
   }
-
   displayGalleryModal();
+
+  async function deleteGallery() {
+    const deleteTrash = document.querySelectorAll(".fa-trash-can");
+    deleteTrash.forEach((trash) => {
+      trash.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const id = trash.id;
+        const token = sessionStorage.getItem("token");
+
+        const init = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        try {
+          const response = await fetch(
+            `http://localhost:5678/api/works/${id}`,
+            init
+          );
+          if (response.ok) {
+            console.log("Image supprimée avec succès !");
+            const figure = trash.closest("figure");
+            if (figure) {
+              figure.remove();
+            }
+            await displayGalleryModal();
+            await displayWorks();
+          } else {
+            console.error("Erreur lors de la suppression de l'image.");
+          }
+        } catch (error) {
+          console.error("Erreur :", error);
+        }
+      });
+    });
+  }
 
   addImg.addEventListener("click", () => {
     modality2.style.display = "flex";
@@ -215,16 +233,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function isFormValid() {
-    const imageInput = document.getElementById("imageUploadInput");
+    const imageInput = document.getElementById("undisplayfile");
     const titleInput = document.getElementById("titleInput");
-    const categoryInput = document.getElementById("categoryIdInput");
 
     const isFilled =
+      imageInput.files &&
       imageInput.files.length > 0 &&
-      titleInput.value.trim() !== "" &&
-      categoryInput.value.trim() !== "";
+      titleInput.value.trim() !== "";
 
     return isFilled;
+  }
+
+  document.getElementById("undisplayfile").addEventListener("change", () => {
+    updateFormState();
+  });
+
+  document.getElementById("titleInput").addEventListener("input", () => {
+    updateFormState();
+  });
+
+  function updateFormState() {
+    const isFormReady = isFormValid();
+
+    updateButtonState();
   }
 
   function updateButtonState() {
@@ -234,28 +265,33 @@ document.addEventListener("DOMContentLoaded", () => {
     addImgButton.style.borderColor = isFormReady ? "#1D6154" : "#A7A7A7";
     addImgButton.style.color = isFormReady ? "#1D6154" : "#FFFFFF";
     addImgButton.disabled = !isFormReady;
-  }
 
-  document
-    .getElementById("imageUploadInput")
-    .addEventListener("change", updateButtonState);
-  document
-    .getElementById("titleInput")
-    .addEventListener("input", updateButtonState);
-  document
-    .getElementById("categoryIdInput")
-    .addEventListener("input", updateButtonState);
+    if (isFormReady) {
+      addImgButton.style.cursor = "pointer";
+      addImgButton.onmouseover = function() {
+        addImgButton.style.backgroundColor = "#1D6154";
+        addImgButton.style.color = "#FFFFFF";
+    };
+     addImgButton.onmouseout = function() {
+        addImgButton.style.backgroundColor = ""; 
+        addImgButton.style.color = ""; 
+    };
+    } else {
+      addImgButton.onmouseover = null;
+      addImgButton.onmouseout = null;
+      addImgButton.style.cursor = "default";
+    }
+  }
+  updateButtonState();
 
   async function addGallery() {
-    const imageUploadForm = document.getElementById("imageUploadForm");
-
-    imageUploadForm.addEventListener("submit", async (e) => {
+    addImgButton.addEventListener("click", async (e) => {
       e.preventDefault();
 
       const formData = new FormData();
       formData.append(
         "image",
-        document.getElementById("imageUploadInput").files[0]
+        document.getElementById("undisplayfile").files[0]
       );
       formData.append("title", document.getElementById("titleInput").value);
       formData.append(
@@ -285,7 +321,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const responseData = await response.json();
 
-          // Ajouter l'image directement au DOM
           const newImage = document.createElement("img");
           newImage.src = responseData.imageUrl;
 
@@ -294,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
           figure.appendChild(newImage);
           gallery.appendChild(figure);
 
-          // Rafraîchir la galerie pour afficher la nouvelle image
+          await displayGalleryModal();
           await displayWorks();
         } else {
           console.error("Erreur lors de l'envoi de l'image.");
@@ -304,7 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
   addGallery();
 
   const editDiv = document.getElementById("edit1");
@@ -324,3 +358,15 @@ function previewImage(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
+async function displayCategoryModal() {
+  const select = document.querySelector(".modal2 select");
+  const categorys = await getCategorys();
+  categorys.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.textContent = category.name;
+    select.appendChild(option);
+  });
+}
+displayCategoryModal();

@@ -135,6 +135,13 @@ table {
 }
 
 /** end reset css**/
+
+#addimg1.form-ready:hover {
+  background-color: #1d6154;
+  color: transparent;
+}
+
+
 body {
   max-width: 1140px;
   margin: auto;
@@ -376,8 +383,8 @@ button:hover {
 
 .fa-xmark {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 30px;
+  right: 25px;
   cursor: pointer;
 }
 
@@ -467,8 +474,8 @@ button:hover {
 
 #leftarrow {
   position: relative;
-  right: 274px;
-  top: 26px;
+  right: 278px;
+  top: 32px;
 }
 
 #leftarrow:hover {
@@ -652,4 +659,18 @@ button:hover {
   position: absolute;
   bottom: 430px;
   right: 275px;
+}
+
+#undisplayfile {
+  display: none;
+}
+
+.align-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#addimg1 {
+  width: 237px;
 }
