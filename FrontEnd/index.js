@@ -169,6 +169,7 @@ async function displayGalleryModal() {
     const img = document.createElement("img");
     const span = document.createElement("span");
     const trash = document.createElement("i");
+    figure.classList.add("gallerymodalflex")
     trash.classList.add("fa-solid", "fa-trash-can");
     span.classList.add("trashicon");
     trash.id = galleryItem.id;
